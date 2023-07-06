@@ -1,0 +1,27 @@
+.percentage{
+    font-size: 80%;
+    text-align: center;
+}
+.row{
+    height: fit-content;
+}
+.icon{
+    text-align: end;
+}
+.dropdown-toggle {
+    outline: none;
+    border: none;
+}
+.icon-bold{
+    -webkit-text-stroke: 1px;
+}
+.dropdown-item:hover{
+    color: #01959F;
+}
+.danger:hover{
+    color: #E11428;
+}
+.bi-check-circle-fill{
+    color: #43936C ;
+    vertical-align: middle;
+}

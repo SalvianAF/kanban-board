@@ -1,0 +1,18 @@
+.card{
+    height: auto;
+    width: 100%;
+}
+.content{
+    margin: 15px
+}
+.task-name{
+    line-height: 1.6;
+}
+.line{
+    height: 2px;
+    border-bottom: 2px dashed #E0E0E0;
+    margin-bottom: 13px;
+} 
+.drag-content:active{
+    border: 1px solid black;
+}

@@ -1,0 +1,12 @@
+.navbar{
+    border-bottom: 2px solid rgb(216, 216, 216);
+    justify-content: start;
+}
+.button-primary{
+    color: white;
+    border-radius: 8px;
+    padding: 3px 20px 3px 20px;
+}
+.icon-bold{
+    -webkit-text-stroke: 1px;
+}
