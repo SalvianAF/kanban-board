@@ -32,7 +32,6 @@ const Bar = (props) => {
                 const sortData = response.data.sort(function(a, b) {
                     return new Date(b.updated_at) - new Date(a.updated_at); //descending
                 })
-                console.log(response)
                 if(newGroup === 1){
                     dispatch(updateGroupOne(sortData))
                 }else if (newGroup === 2){
@@ -82,7 +81,7 @@ const Bar = (props) => {
             :
                 <p className="col-2 percentage px-0 my-0">{props.percentage}%</p>
             }
-            <div class="btn-group dropdown col-2 icon">
+            <div className="btn-group dropdown col-2 icon">
                 <a  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/#">
                    <h5><i className="bi bi-three-dots px-0" style={{color:"#757575"}}></i></h5>
                 </a>

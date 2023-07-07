@@ -84,7 +84,7 @@ const GroupTask = (props) => {
                 <p className="text-bold m-0 mt-2">{props.description}</p>
 
                 {listTask.map((task) => <Task name={task.name} percentage={task.progress_percentage} endpoint={endpoint+task.id} 
-                    group={task.todo_id} id={task.id}/>)}
+                    group={task.todo_id} id={task.id} key={task.id}/>)}
 
                 <a className="row mt-2 add-task" href="/#" onClick={() => setModalShow(true)}>
                     <i className="bi bi-plus-circle icon-bold col-1"></i>

@@ -61,13 +61,15 @@ const Board = () => {
             <div className="navbar px-4 py-3">
                 <h5 className="mr-4 mb-0">Product Roadmap</h5>
                {taskList.length < 4? 
-                    <Button className="button-primary" onClick={() => setModalShow(true)}><i class="bi bi-plus-lg icon-bold"></i> &nbsp;Add New Group</Button>
+                    <Button className="button-primary" onClick={() => setModalShow(true)}><i className="bi bi-plus-lg icon-bold"></i> &nbsp;Add New Group</Button>
                : <></>}
                 
 
             </div>
             <div className="m-4 d-flex justify-content-between">
-                {Object.values(taskList).map((group,idx) => <GroupTask title={group.title} description={group.description} group={idx+1}/>)}
+                {Object.values(taskList).map((group,idx) =>
+                     <GroupTask title={group.title} description={group.description} group={idx+1} key={idx}/>
+                )}
                    
             </div>
             <ModalForm

@@ -45,7 +45,7 @@ const ModalConfirmation = (props) => {
             centered
         >
             <Modal.Header closeButton className="px-4">
-                <Modal.Title><i class="bi bi-exclamation-triangle"></i>Delete Task</Modal.Title>
+                <Modal.Title><i className="bi bi-exclamation-triangle"></i>Delete Task</Modal.Title>
             </Modal.Header>
             <Modal.Body className="px-4 py-2">
               <p>Are you sure want to delete this task? your action can't be reverted</p>
