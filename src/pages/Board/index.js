@@ -12,9 +12,11 @@ import { updateGroupThree } from "../../redux/groupThreeSlice";
 import { updateGroupFour } from "../../redux/groupFourSlice";
 
 const Board = () => {
+    //getting state from store
     const {taskList} = useSelector((state) => state.tasks)
     const {url} = useSelector((state) => state.endpoint)
     const {token} = useSelector((state) => state.endpoint)
+
     const dispatch = useDispatch()
     const group = [1,2,3,4]
     const [modalShow, setModalShow] = useState(false);
@@ -24,10 +26,10 @@ const Board = () => {
         getTaskPerGrop()
     }, [])
 
-    const getGroupList = async () => {
+    const getGroupList = async () => { 
         axios.get(url, token)
         .then((response) => {
-            dispatch(updateTasks(response.data))
+            dispatch(updateTasks(response.data)) //initialize state for group
         }).catch(err => {
             console.error(err);
         });;
@@ -38,7 +40,7 @@ const Board = () => {
             axios.get(url + val + "/items", token)
             .then((response) => {
                 const sortData = response.data.sort(function(a, b) {
-                    return new Date(b.updated_at) - new Date(a.updated_at); //descending
+                    return new Date(b.updated_at) - new Date(a.updated_at); // descending to make sure newest updated data is in the top
                 })
                 if(val === 1){
                     dispatch(updateGroupOne(sortData))

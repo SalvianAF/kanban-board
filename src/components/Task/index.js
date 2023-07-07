@@ -5,7 +5,7 @@ import Bar from "../Bar";
 
 const Task = (props) => {
 
-    const handleOnDragStart = (e, id, group) => {
+    const handleOnDragStart = (e, id, group) => {  //drag and frop purpose
         e.dataTransfer.setData("data", [id, group]);
     } 
 

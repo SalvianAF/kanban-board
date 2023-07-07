@@ -19,20 +19,20 @@ const Bar = (props) => {
 
     const moveGroup = (direction) => {
         let newGroup = props.group
-        if (direction === "left"){
+        if (direction === "left"){ //decrement the group id
             newGroup -= 1
-        } else if (direction === "right"){
+        } else if (direction === "right"){ //increment the group id
             newGroup += 1
         }
         const body = {"target_todo_id": newGroup}
-        axios.patch(props.endpoint, body, token)
+        axios.patch(props.endpoint, body, token) // updating task; my assumption this update trigering post in backend
         .then((response) => {
-            axios.get(url+ newGroup +"/items", token)
+            axios.get(url+ newGroup +"/items", token) // get tasks from new group
             .then((response) => {
                 const sortData = response.data.sort(function(a, b) {
-                    return new Date(b.updated_at) - new Date(a.updated_at); //descending
+                    return new Date(b.updated_at) - new Date(a.updated_at); //descending to make sure newest updated data is in the top
                 })
-                if(newGroup === 1){
+                if(newGroup === 1){ //store tasks to appropriate group
                     dispatch(updateGroupOne(sortData))
                 }else if (newGroup === 2){
                     dispatch(updateGroupTwo(sortData))
@@ -43,12 +43,12 @@ const Bar = (props) => {
                 } 
             // })
             })
-            axios.get(url+ props.group +"/items", token)
+            axios.get(url+ props.group +"/items", token) // get tasks from current group
             .then((response) => {
                 const sortData = response.data.sort(function(a, b) {
-                    return new Date(b.updated_at) - new Date(a.updated_at); //descending
+                    return new Date(b.updated_at) - new Date(a.updated_at); //descending to make sure newest updated data is in the top
                 })
-                if(props.group === 1){
+                if(props.group === 1){ //store tasks to appropriate group
                     dispatch(updateGroupOne(sortData))
                 }else if (props.group === 2){
                     dispatch(updateGroupTwo(sortData))

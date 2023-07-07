@@ -12,11 +12,12 @@ import { updateGroupFour } from "../../redux/groupFourSlice";
 const GroupTask = (props) => {
     const [modalShow, setModalShow] = useState(false)
     const dispatch = useDispatch()
+    // getting state from store
     const {url} = useSelector((state) => state.endpoint)
     const {token} = useSelector((state) => state.endpoint)
-    const color = ["blue", "yellow", "red", "green"]
+    const color = ["blue", "yellow", "red", "green"] //color purpose
     const endpoint = url + props.group +'/items/'
-    const listTask = useSelector(state => {
+    const listTask = useSelector(state => {  //get tasks from appropriate group
         if(props.group === 1) {
             return state.groupOne.groupOneList
         }else if (props.group === 2){
@@ -39,9 +40,9 @@ const GroupTask = (props) => {
                 axios.get(url+ props.group +"/items", token)
                 .then((response) => {
                     const sortData = response.data.sort(function(a, b) {
-                        return new Date(b.updated_at) - new Date(a.updated_at); //descending
+                        return new Date(b.updated_at) - new Date(a.updated_at); //descending to make sure newest updated data is in the top
                     })
-                    if(props.group === 1){
+                    if(props.group === 1){  //store tasks to appropriate group
                         dispatch(updateGroupOne(sortData))
                     }else if (props.group === 2){
                         dispatch(updateGroupTwo(sortData))
@@ -54,9 +55,9 @@ const GroupTask = (props) => {
                 axios.get(url+ data[1] +"/items", token)
                 .then((response) => {
                     const sortData = response.data.sort(function(a, b) {
-                        return new Date(b.updated_at) - new Date(a.updated_at); //descending
+                        return new Date(b.updated_at) - new Date(a.updated_at); //descending to make sure newest updated data is in the top
                     })
-                    if(data[1] == 1){
+                    if(data[1] == 1){  //store tasks to appropriate group
                         dispatch(updateGroupOne(sortData))
                     }else if (data[1] == 2){
                         dispatch(updateGroupTwo(sortData))
@@ -71,7 +72,7 @@ const GroupTask = (props) => {
     
     }
 
-    const handleonDragOver = (e) => {
+    const handleonDragOver = (e) => { //drag and drop purpose
         e.preventDefault()
     }
 

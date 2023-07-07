@@ -13,14 +13,14 @@ const ModalConfirmation = (props) => {
     const {token} = useSelector((state) => state.endpoint)
 
     const fireToEndpoint = () => {
-        axios.delete(props.endpoint, token)
+        axios.delete(props.endpoint, token) // delete the selected task
         .then((response) => {
-            axios.get(url+ props.group +"/items", token)
+            axios.get(url+ props.group +"/items", token) //get task from group
             .then((response) => {
                 const sortData = response.data.sort(function(a, b) {
-                    return new Date(b.updated_at) - new Date(a.updated_at); //descending
+                    return new Date(b.updated_at) - new Date(a.updated_at); //descending to make sure newest updated data is in the top
                 })
-                if(props.group === 1){
+                if(props.group === 1){ //store tasks to appropriate group
                     dispatch(updateGroupOne(sortData))
                 }else if (props.group === 2){
                     dispatch(updateGroupTwo(sortData))

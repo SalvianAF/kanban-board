@@ -13,13 +13,14 @@ const ModalForm = (props) => {
     const [secondInput, setSecondInput] = useState("")
     const [isValid, setIsValid] = useState(true)
     const dispatch = useDispatch()
+    //get data from store
     const {url} = useSelector((state) => state.endpoint)
     const {token} = useSelector((state) => state.endpoint)
 
     useEffect(() => {
         setFirstInput(props.name)
         setSecondInput(props.percentage)
-    },[props.show])
+    },[props.show]) //to trigering rerender
 
 
     const fireToEndpoint = () => {
@@ -37,21 +38,21 @@ const ModalForm = (props) => {
             }
             
             if (props.type === "edit task"){
-                axios.patch(props.endpoint, body, token)
+                axios.patch(props.endpoint, body, token)  //updating task
                 .then((response) => {
                     if (props.type === "edit task"){
                         const temp = {
                             "name": response.data.name,
                             "progress_percentage": response.data.progress_percentage
                         }
-                        axios.post(url+ props.group +"/items", temp, token)
+                        axios.post(url+ props.group +"/items", temp, token) //post the updated task
                         .then(() => {
-                            axios.get(url+ props.group +"/items", token)
+                            axios.get(url+ props.group +"/items", token) // get tasks from group
                             .then((response) => {
                                 const sortData = response.data.sort(function(a, b) {
-                                    return new Date(b.updated_at) - new Date(a.updated_at); //descending
+                                    return new Date(b.updated_at) - new Date(a.updated_at); //descending to make sure newest updated data is in the top
                                 })
-                                if(props.group === 1){
+                                if(props.group === 1){  //store tasks to appropriate group
                                     dispatch(updateGroupOne(sortData))
                                 }else if (props.group === 2){
                                     dispatch(updateGroupTwo(sortData))
@@ -71,18 +72,18 @@ const ModalForm = (props) => {
                     console.error(err);
                 });
             }else{
-                axios.post(props.endpoint, body, token)
+                axios.post(props.endpoint, body, token) // post new task or group
                 .then(() => {
-                    axios.get(props.endpoint, token)
+                    axios.get(props.endpoint, token) // get new task or group
                     .then((response) => {
                         console.log(props.endpoint)
                         if (props.type === "add group"){
                             dispatch(updateTasks(response.data))
                         }else{
                             const sortData = response.data.sort(function(a, b) {
-                                return new Date(b.updated_at) - new Date(a.updated_at); //descending
+                                return new Date(b.updated_at) - new Date(a.updated_at); //descending to make sure newest updated data is in the top
                             })
-                            if(props.group === 1){
+                            if(props.group === 1){  //store tasks to appropriate group
                                 dispatch(updateGroupOne(sortData))
                             }else if (props.group === 2){
                                 dispatch(updateGroupTwo(sortData))
