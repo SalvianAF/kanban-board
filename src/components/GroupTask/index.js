@@ -86,10 +86,10 @@ const GroupTask = (props) => {
                 {listTask.map((task) => <Task name={task.name} percentage={task.progress_percentage} endpoint={endpoint+task.id} 
                     group={task.todo_id} id={task.id} key={task.id}/>)}
 
-                <a className="row mt-2 add-task" href="/#" onClick={() => setModalShow(true)}>
-                    <i className="bi bi-plus-circle icon-bold col-1"></i>
-                    <p className="text col-5">New Task</p>
-                </a>
+                <button className="flex-row d-flex mt-2 add-task" onClick={() => setModalShow(true)}>
+                    <i className="bi bi-plus-circle icon-bold pr-2"></i>
+                    <p className="text m-0">New Task</p>
+                </button>
             </div>
             <ModalForm
                 show={modalShow}
