@@ -52,14 +52,17 @@ const ModalForm = (props) => {
                         .then(() => {
                             axios.get(DEFAULT_ENDPOINT+ props.group +"/items", config)
                             .then((response) => {
+                                const sortData = response.data.sort(function(a, b) {
+                                    return new Date(b.updated_at) - new Date(a.updated_at); //descending
+                                })
                                 if(props.group === 1){
-                                    dispatch(updateGroupOne(response.data))
+                                    dispatch(updateGroupOne(sortData))
                                 }else if (props.group === 2){
-                                    dispatch(updateGroupTwo(response.data))
+                                    dispatch(updateGroupTwo(sortData))
                                 }else if (props.group === 3){
-                                    dispatch(updateGroupThree(response.data))
+                                    dispatch(updateGroupThree(sortData))
                                 }else if (props.group === 4){
-                                    dispatch(updateGroupFour(response.data))
+                                    dispatch(updateGroupFour(sortData))
                                 } 
                             }).catch(err => {
                                 console.error(err);
@@ -77,14 +80,17 @@ const ModalForm = (props) => {
                     axios.get(props.endpoint, config)
                     .then((response) => {
                         // dispatch(updateTasks(response.data))
+                        const sortData = response.data.sort(function(a, b) {
+                            return new Date(b.updated_at) - new Date(a.updated_at); //descending
+                        })
                         if(props.group === 1){
-                            dispatch(updateGroupOne(response.data))
+                            dispatch(updateGroupOne(sortData))
                         }else if (props.group === 2){
-                            dispatch(updateGroupTwo(response.data))
+                            dispatch(updateGroupTwo(sortData))
                         }else if (props.group === 3){
-                            dispatch(updateGroupThree(response.data))
+                            dispatch(updateGroupThree(sortData))
                         }else if (props.group === 4){
-                            dispatch(updateGroupFour(response.data))
+                            dispatch(updateGroupFour(sortData))
                         } 
                     }).catch(err => {
                         console.error(err);

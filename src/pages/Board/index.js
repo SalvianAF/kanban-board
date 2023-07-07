@@ -32,8 +32,6 @@ const Board = () => {
         axios.get(DEFAULT_ENDPOINT, config)
         .then((response) => {
             dispatch(updateTasks(response.data))
-            // console.log(taskList.length)
-            // console.log(taskList)
         }).catch(err => {
             console.error(err);
         });;
