@@ -4,20 +4,17 @@ import { ProgressBar } from "react-bootstrap";
 import ModalForm from "../ModalForm";
 import ModalConfirmation from "../ModalConfirmation";
 import axios from "axios";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { updateGroupOne } from "../../redux/groupOneSlice";
 import { updateGroupTwo } from "../../redux/groupTwoSlice";
 import { updateGroupThree } from "../../redux/groupThreeSlice";
 import { updateGroupFour } from "../../redux/groupFourSlice";
 
-const DEFAULT_ENDPOINT = "https://todo-api-18-140-52-65.rakamin.com/todos/"
 const Bar = (props) => {
     const [modalFormShow, setModalFormShow] = useState(false)
     const [modalConfShow, setModalConfShow] = useState(false)
-
-    const config = {
-        headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMTksImV4cCI6MTY5NzA3OTk4N30.pKtcR893pr8F081oWyymr3b4mDhMXCu7PqGKh2A-hfM` }
-    };
+    const {url} = useSelector((state) => state.endpoint)
+    const {token} = useSelector((state) => state.endpoint)
     const dispatch = useDispatch()
 
     const moveGroup = (direction) => {
@@ -28,48 +25,40 @@ const Bar = (props) => {
             newGroup += 1
         }
         const body = {"target_todo_id": newGroup}
-        axios.patch(props.endpoint, body, config)
+        axios.patch(props.endpoint, body, token)
         .then((response) => {
-            // console.log(response)
-            // const temp = {
-            //     "name": response.data.name,
-            //     "progress_percentage": response.data.progress_percentage
-            // }
-            // axios.post(DEFAULT_ENDPOINT+ newGroup +"/items", temp, config)
-            // .then((resp) => {
-                axios.get(DEFAULT_ENDPOINT+ newGroup +"/items", config)
-                .then((response) => {
-                    // dispatch(updateTasks(response.data))
-                    const sortData = response.data.sort(function(a, b) {
-                        return new Date(b.updated_at) - new Date(a.updated_at); //descending
-                    })
-                    console.log(response)
-                    if(newGroup === 1){
-                        dispatch(updateGroupOne(sortData))
-                    }else if (newGroup === 2){
-                        dispatch(updateGroupTwo(sortData))
-                    }else if (newGroup === 3){
-                        dispatch(updateGroupThree(sortData))
-                    }else if (newGroup === 4){
-                        dispatch(updateGroupFour(sortData))
-                    } 
-                // })
+            axios.get(url+ newGroup +"/items", token)
+            .then((response) => {
+                const sortData = response.data.sort(function(a, b) {
+                    return new Date(b.updated_at) - new Date(a.updated_at); //descending
                 })
-                axios.get(DEFAULT_ENDPOINT+ props.group +"/items", config)
-                .then((response) => {
-                    const sortData = response.data.sort(function(a, b) {
-                        return new Date(b.updated_at) - new Date(a.updated_at); //descending
-                    })
-                    if(props.group === 1){
-                        dispatch(updateGroupOne(sortData))
-                    }else if (props.group === 2){
-                        dispatch(updateGroupTwo(sortData))
-                    }else if (props.group === 3){
-                        dispatch(updateGroupThree(sortData))
-                    }else if (props.group === 4){
-                        dispatch(updateGroupFour(sortData))
-                    } 
+                console.log(response)
+                if(newGroup === 1){
+                    dispatch(updateGroupOne(sortData))
+                }else if (newGroup === 2){
+                    dispatch(updateGroupTwo(sortData))
+                }else if (newGroup === 3){
+                    dispatch(updateGroupThree(sortData))
+                }else if (newGroup === 4){
+                    dispatch(updateGroupFour(sortData))
+                } 
+            // })
+            })
+            axios.get(url+ props.group +"/items", token)
+            .then((response) => {
+                const sortData = response.data.sort(function(a, b) {
+                    return new Date(b.updated_at) - new Date(a.updated_at); //descending
                 })
+                if(props.group === 1){
+                    dispatch(updateGroupOne(sortData))
+                }else if (props.group === 2){
+                    dispatch(updateGroupTwo(sortData))
+                }else if (props.group === 3){
+                    dispatch(updateGroupThree(sortData))
+                }else if (props.group === 4){
+                    dispatch(updateGroupFour(sortData))
+                } 
+            })
         }
             
         ).catch(err => {

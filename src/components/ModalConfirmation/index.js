@@ -7,19 +7,15 @@ import { updateGroupTwo } from "../../redux/groupTwoSlice";
 import { updateGroupThree } from "../../redux/groupThreeSlice";
 import { updateGroupFour } from "../../redux/groupFourSlice";
 
-const DEFAULT_ENDPOINT = "https://todo-api-18-140-52-65.rakamin.com/todos/"
 const ModalConfirmation = (props) => {
     const dispatch = useDispatch()
-
-    const config = {
-        headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMTksImV4cCI6MTY5NzA3OTk4N30.pKtcR893pr8F081oWyymr3b4mDhMXCu7PqGKh2A-hfM` }
-    };
+    const {url} = useSelector((state) => state.endpoint)
+    const {token} = useSelector((state) => state.endpoint)
 
     const fireToEndpoint = () => {
-        // console.log(props.endpoint)
-        axios.delete(props.endpoint, config)
+        axios.delete(props.endpoint, token)
         .then((response) => {
-            axios.get(DEFAULT_ENDPOINT+ props.group +"/items", config)
+            axios.get(url+ props.group +"/items", token)
             .then((response) => {
                 const sortData = response.data.sort(function(a, b) {
                     return new Date(b.updated_at) - new Date(a.updated_at); //descending

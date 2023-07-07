@@ -4,6 +4,7 @@ import groupOneSlice from './groupOneSlice';
 import groupTwoSlice from './groupTwoSlice';
 import groupThreeSlice from './groupThreeSlice';
 import groupFourSlice from './groupFourSlice';
+import endpointSlice from './endpointSlice';
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     groupTwo: groupTwoSlice,
     groupThree: groupThreeSlice,
     groupFour: groupFourSlice,
+    endpoint: endpointSlice,
   }
 })

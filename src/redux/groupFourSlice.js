@@ -8,8 +8,6 @@ export const groupFourSlice = createSlice({
   reducers: {
     updateGroupFour: (state, action) => {
         state.groupFourList = action.payload
-        // console.log("pppp")
-        // console.log(action.payload)
     }
   }
 })

@@ -11,17 +11,13 @@ import { updateGroupTwo } from "../../redux/groupTwoSlice";
 import { updateGroupThree } from "../../redux/groupThreeSlice";
 import { updateGroupFour } from "../../redux/groupFourSlice";
 
-const DEFAULT_ENDPOINT = "https://todo-api-18-140-52-65.rakamin.com/todos"
 const Board = () => {
-    // const [taskList, setListGroup] = useState([]);
     const {taskList} = useSelector((state) => state.tasks)
+    const {url} = useSelector((state) => state.endpoint)
+    const {token} = useSelector((state) => state.endpoint)
     const dispatch = useDispatch()
     const group = [1,2,3,4]
     const [modalShow, setModalShow] = useState(false);
-
-    const config = {
-        headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMTksImV4cCI6MTY5NzA3OTk4N30.pKtcR893pr8F081oWyymr3b4mDhMXCu7PqGKh2A-hfM` }
-    };
 
     useEffect(() => {
         getGroupList()
@@ -29,7 +25,7 @@ const Board = () => {
     }, [])
 
     const getGroupList = async () => {
-        axios.get(DEFAULT_ENDPOINT, config)
+        axios.get(url, token)
         .then((response) => {
             dispatch(updateTasks(response.data))
         }).catch(err => {
@@ -37,14 +33,13 @@ const Board = () => {
         });;
     }
 
-    const getTaskPerGrop = () => {
+    const getTaskPerGrop = async () => {
         group.map((val) => {
-            axios.get(DEFAULT_ENDPOINT +"/"+ val + "/items", config)
+            axios.get(url + val + "/items", token)
             .then((response) => {
                 const sortData = response.data.sort(function(a, b) {
                     return new Date(b.updated_at) - new Date(a.updated_at); //descending
                 })
-                
                 if(val === 1){
                     dispatch(updateGroupOne(sortData))
                 }else if (val === 2){
@@ -54,10 +49,9 @@ const Board = () => {
                 }else if (val === 4){
                     dispatch(updateGroupFour(sortData))
                 }
-                // console.log(taskList)
             }).catch(err => {
                 console.error(err);
-            });;
+            });
         })
     }
 
@@ -80,7 +74,6 @@ const Board = () => {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 type={"add group"}
-                endpoint={DEFAULT_ENDPOINT}
             />
         </div>
     )

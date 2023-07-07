@@ -8,8 +8,6 @@ export const taskSlice = createSlice({
   reducers: {
     updateTasks: (state, action) => {
         state.taskList = action.payload
-        // console.log("pppp")
-        // console.log(action.payload)
     }
   }
 })

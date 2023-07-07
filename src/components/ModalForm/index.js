@@ -7,22 +7,19 @@ import { updateGroupTwo } from "../../redux/groupTwoSlice";
 import { updateGroupThree } from "../../redux/groupThreeSlice";
 import { updateGroupFour } from "../../redux/groupFourSlice";
 
-const DEFAULT_ENDPOINT = "https://todo-api-18-140-52-65.rakamin.com/todos/"
 const ModalForm = (props) => {
     const [firstInput, setFirstInput] = useState("")
     const [secondInput, setSecondInput] = useState("")
     const [isValid, setIsValid] = useState(true)
     const dispatch = useDispatch()
+    const {url} = useSelector((state) => state.endpoint)
+    const {token} = useSelector((state) => state.endpoint)
 
     useEffect(() => {
         setFirstInput(props.name)
         setSecondInput(props.percentage)
-        console.log(props.name)
     },[props.show])
 
-    const config = {
-        headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMTksImV4cCI6MTY5NzA3OTk4N30.pKtcR893pr8F081oWyymr3b4mDhMXCu7PqGKh2A-hfM` }
-    };
 
     const fireToEndpoint = () => {
         if (firstInput === "" || secondInput === "") {
@@ -39,18 +36,16 @@ const ModalForm = (props) => {
             }
             
             if (props.type === "edit task"){
-                console.log(props.endpoint)
-                axios.patch(props.endpoint, body, config)
+                axios.patch(props.endpoint, body, token)
                 .then((response) => {
-                    console.log(response)
                     if (props.type === "edit task"){
                         const temp = {
                             "name": response.data.name,
                             "progress_percentage": response.data.progress_percentage
                         }
-                        axios.post(DEFAULT_ENDPOINT+ props.group +"/items", temp, config)
+                        axios.post(url+ props.group +"/items", temp, token)
                         .then(() => {
-                            axios.get(DEFAULT_ENDPOINT+ props.group +"/items", config)
+                            axios.get(url+ props.group +"/items", token)
                             .then((response) => {
                                 const sortData = response.data.sort(function(a, b) {
                                     return new Date(b.updated_at) - new Date(a.updated_at); //descending
@@ -75,11 +70,11 @@ const ModalForm = (props) => {
                     console.error(err);
                 });
             }else{
-                axios.post(props.endpoint, body, config)
+                axios.post(props.endpoint, body, token)
                 .then(() => {
-                    axios.get(props.endpoint, config)
+                    axios.get(props.endpoint, token)
                     .then((response) => {
-                        // dispatch(updateTasks(response.data))
+                        console.log(props.endpoint)
                         const sortData = response.data.sort(function(a, b) {
                             return new Date(b.updated_at) - new Date(a.updated_at); //descending
                         })
@@ -124,9 +119,6 @@ const ModalForm = (props) => {
 
             </Modal.Header>
             <Modal.Body style={{paddingTop:30}}>
-                {/* <p>{props.endpoint}</p>
-                <p>{props.name}</p>
-                <p>{props.percentage}</p> */}
                 <Form>
                     <Form.Group >
                         {props.type === "add group"?
