@@ -5,7 +5,7 @@ export const endpointSlice = createSlice({
   initialState: {
     url: "https://todo-api-18-140-52-65.rakamin.com/todos/",
     token: {
-        headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMTksImV4cCI6MTY5NzA3OTk4N30.pKtcR893pr8F081oWyymr3b4mDhMXCu7PqGKh2A-hfM` }
+        headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozNDcsImV4cCI6MTY5NzM0Mjk5NH0.s3snyz8ZIdAIhjWlCewDi3zDdJthX31K8LQQiYftaW4` }
     }
   },
   reducers: {

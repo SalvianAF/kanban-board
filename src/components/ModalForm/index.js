@@ -6,6 +6,7 @@ import { updateGroupOne } from "../../redux/groupOneSlice";
 import { updateGroupTwo } from "../../redux/groupTwoSlice";
 import { updateGroupThree } from "../../redux/groupThreeSlice";
 import { updateGroupFour } from "../../redux/groupFourSlice";
+import { updateTasks } from "../../redux/taskSlice";
 
 const ModalForm = (props) => {
     const [firstInput, setFirstInput] = useState("")
@@ -75,18 +76,22 @@ const ModalForm = (props) => {
                     axios.get(props.endpoint, token)
                     .then((response) => {
                         console.log(props.endpoint)
-                        const sortData = response.data.sort(function(a, b) {
-                            return new Date(b.updated_at) - new Date(a.updated_at); //descending
-                        })
-                        if(props.group === 1){
-                            dispatch(updateGroupOne(sortData))
-                        }else if (props.group === 2){
-                            dispatch(updateGroupTwo(sortData))
-                        }else if (props.group === 3){
-                            dispatch(updateGroupThree(sortData))
-                        }else if (props.group === 4){
-                            dispatch(updateGroupFour(sortData))
-                        } 
+                        if (props.type === "add group"){
+                            dispatch(updateTasks(response.data))
+                        }else{
+                            const sortData = response.data.sort(function(a, b) {
+                                return new Date(b.updated_at) - new Date(a.updated_at); //descending
+                            })
+                            if(props.group === 1){
+                                dispatch(updateGroupOne(sortData))
+                            }else if (props.group === 2){
+                                dispatch(updateGroupTwo(sortData))
+                            }else if (props.group === 3){
+                                dispatch(updateGroupThree(sortData))
+                            }else if (props.group === 4){
+                                dispatch(updateGroupFour(sortData))
+                            } 
+                        }
                     }).catch(err => {
                         console.error(err);
                     });

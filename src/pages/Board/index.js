@@ -66,7 +66,7 @@ const Board = () => {
                 
 
             </div>
-            <div className="m-4 d-flex justify-content-between">
+            <div className="m-4 row">
                 {Object.values(taskList).map((group,idx) =>
                      <GroupTask title={group.title} description={group.description} group={idx+1} key={idx}/>
                 )}
@@ -76,6 +76,7 @@ const Board = () => {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 type={"add group"}
+                endpoint={url}
             />
         </div>
     )

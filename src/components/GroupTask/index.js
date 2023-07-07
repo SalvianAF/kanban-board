@@ -76,7 +76,7 @@ const GroupTask = (props) => {
     }
 
     return(
-        <div className={"group-container col-3 mb-2 "+ color[props.group-1]} onDrop={handleOnDrop} onDragOver={(e) => handleonDragOver(e)}>
+        <div className={"group-container col-md-3 mb-2 "+ color[props.group-1]} onDrop={handleOnDrop} onDragOver={(e) => handleonDragOver(e)}>
             <div className="p-2">
                 <div className={"group "+ color[props.group-1]}>
                     <p className="group-name m-0 px-2">{props.title}</p>

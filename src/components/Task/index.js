@@ -12,7 +12,7 @@ const Task = (props) => {
     return(
         <div className="card mt-2 drag-content" draggable onDragStart={(e) => handleOnDragStart(e, props.id, props.group)}>
             <div className="content">
-                <h6 className="task-name">{props.name}||{props.id},{props.group}</h6>
+                <h6 className="task-name">{props.name}</h6>
                 <div className="line"></div>
                 <Bar percentage={props.percentage} name={props.name} endpoint={props.endpoint} group={props.group}/>
             </div>           
