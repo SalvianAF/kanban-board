@@ -86,10 +86,10 @@ const Bar = (props) => {
                    <h5><i className="bi bi-three-dots px-0" style={{color:"#757575"}}></i></h5>
                 </a>
                 <div className="dropdown-menu">
-                    <a className="dropdown-item" href="/#" onClick={() => moveGroup("right")}><i className="bi bi-arrow-right icon-bold pr-4"></i>Move Right</a>
-                    <a className="dropdown-item" href="/#" onClick={() => moveGroup("left")}><i className="bi bi-arrow-left icon-bold pr-4"></i>Move Left</a>
-                    <a className="dropdown-item" href="/#" onClick={() => setModalFormShow(true)}><i className="bi bi-pencil-square icon-bold pr-4"></i>Edit</a>
-                    <a className="dropdown-item danger" href="/#" onClick={() => setModalConfShow(true)}><i className="bi bi-trash3 icon-bold pr-4"></i>Delete</a>
+                    <div className="dropdown-item"  onClick={() => moveGroup("right")}><i className="bi bi-arrow-right icon-bold pr-4"></i>Move Right</div>
+                    <div className="dropdown-item" onClick={() => moveGroup("left")}><i className="bi bi-arrow-left icon-bold pr-4"></i>Move Left</div>
+                    <div className="dropdown-item" onClick={() => setModalFormShow(true)}><i className="bi bi-pencil-square icon-bold pr-4"></i>Edit</div>
+                    <div className="dropdown-item danger"  onClick={() => setModalConfShow(true)}><i className="bi bi-trash3 icon-bold pr-4"></i>Delete</div>
                 </div>
                 <ModalForm
                     show={modalFormShow}

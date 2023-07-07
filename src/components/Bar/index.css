@@ -2,6 +2,12 @@
     font-size: 80%;
     text-align: center;
 }
+.progress-bar{
+    background-color: #01959F;
+}
+.bg-success{
+    background-color: #43936C !important;
+}
 .row{
     height: fit-content;
 }

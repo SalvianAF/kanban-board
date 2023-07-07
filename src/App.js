@@ -1,28 +1,27 @@
 // import logo from './logo.svg';
 import './App.scss';
 import React, {lazy} from "react";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+// import Board from './pages/Board';
 
 const Board = lazy(() => import("./pages/Board"));
+const Landing = lazy(() => import("./pages/Landing"));
+
+const router = createBrowserRouter([
+  {
+    path: "/v1",
+    element: <Board/>,
+  },
+  {
+    path: "/",
+    element: <Landing/>,
+  },
+]);
 
 function App() {
   return (
-    <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-      <Board/>
-    </div>
+    <RouterProvider router={router}/>
+
   );
 }
 

@@ -165,7 +165,7 @@ const ModalForm = (props) => {
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-end">
                 <Button variant="outline-light" onClick={props.onHide} style={{width:120}}>Cancle</Button>
-                <Button variant="primary" style={{width:120}} onClick={() => fireToEndpoint()}>Save Changes</Button>
+                <Button variant="primary" style={{width:120, color:"white"}} onClick={() => fireToEndpoint()}>Save Changes</Button>
             </Modal.Footer>
         </Modal>
     )
