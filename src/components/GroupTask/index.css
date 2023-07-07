@@ -1,4 +1,4 @@
-.board{
+.group-container{
     width: 351px;
     padding: 5px;
     background-color: #FFFAFA  ;
@@ -6,13 +6,30 @@
     border-radius: 4px;
 }
 .group{
-    background-color: #FFFAFA  ;
-    border: 2px solid #F5B1B7  ;
-    border-radius: 4px;
     width: fit-content;
+    border: 2px solid;
+    border-radius: 4px;
 }
-.group-name{
-    color: #E11428  ;
+
+.blue{
+    border-color: #4DB5BC ;
+    background-color: #F7FEFF ;
+    color: #01959F;
+}
+.yellow{
+    border-color: #FEEABC;
+    background-color: #FFFCF5 ;
+    color: #FA9810;
+}
+.red{
+    border-color: #F5B1B7;
+    background-color: #FFFAFA;
+    color: #E11428;
+}
+.green{
+    border-color: #B8DBCA;
+    background-color: #F8FBF9;
+    color: #43936C;
 }
 .text{
     font-size:90%;
@@ -20,6 +37,7 @@
 .text-bold{
     font-size:90%;
     font-weight: 600;
+    color: black;
 }
 .icon-bold{
     -webkit-text-stroke: 1px;

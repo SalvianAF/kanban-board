@@ -1,12 +1,24 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Form, Modal} from 'react-bootstrap';
 import axios from "axios";
+import { useDispatch, useSelector } from 'react-redux'
+import { updateGroupOne } from "../../redux/groupOneSlice";
+import { updateGroupTwo } from "../../redux/groupTwoSlice";
+import { updateGroupThree } from "../../redux/groupThreeSlice";
+import { updateGroupFour } from "../../redux/groupFourSlice";
 
-const CREATE_TASK_ENDPOINT = "https://todo-api-18-140-52-65.rakamin.com/todos/"
+const DEFAULT_ENDPOINT = "https://todo-api-18-140-52-65.rakamin.com/todos/"
 const ModalForm = (props) => {
-    const [firstInput, setFirstInput] = useState(props.name)
-    const [secondInput, setSecondInput] = useState(props.percentage)
+    const [firstInput, setFirstInput] = useState("")
+    const [secondInput, setSecondInput] = useState("")
     const [isValid, setIsValid] = useState(true)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        setFirstInput(props.name)
+        setSecondInput(props.percentage)
+        console.log(props.name)
+    },[props.show])
 
     const config = {
         headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMTksImV4cCI6MTY5NzA3OTk4N30.pKtcR893pr8F081oWyymr3b4mDhMXCu7PqGKh2A-hfM` }
@@ -36,8 +48,23 @@ const ModalForm = (props) => {
                             "name": response.data.name,
                             "progress_percentage": response.data.progress_percentage
                         }
-                        axios.post(CREATE_TASK_ENDPOINT+ props.group +"/items", temp, config)
-                        .then((resp) => console.log(resp))
+                        axios.post(DEFAULT_ENDPOINT+ props.group +"/items", temp, config)
+                        .then(() => {
+                            axios.get(DEFAULT_ENDPOINT+ props.group +"/items", config)
+                            .then((response) => {
+                                if(props.group === 1){
+                                    dispatch(updateGroupOne(response.data))
+                                }else if (props.group === 2){
+                                    dispatch(updateGroupTwo(response.data))
+                                }else if (props.group === 3){
+                                    dispatch(updateGroupThree(response.data))
+                                }else if (props.group === 4){
+                                    dispatch(updateGroupFour(response.data))
+                                } 
+                            }).catch(err => {
+                                console.error(err);
+                            });
+                        })
                     }
                     props.onHide()
                     
@@ -46,14 +73,30 @@ const ModalForm = (props) => {
                 });
             }else{
                 axios.post(props.endpoint, body, config)
-                .then((response) => {
-                    console.log(response)
+                .then(() => {
+                    axios.get(props.endpoint, config)
+                    .then((response) => {
+                        // dispatch(updateTasks(response.data))
+                        if(props.group === 1){
+                            dispatch(updateGroupOne(response.data))
+                        }else if (props.group === 2){
+                            dispatch(updateGroupTwo(response.data))
+                        }else if (props.group === 3){
+                            dispatch(updateGroupThree(response.data))
+                        }else if (props.group === 4){
+                            dispatch(updateGroupFour(response.data))
+                        } 
+                    }).catch(err => {
+                        console.error(err);
+                    });
                     props.onHide()
                     
                 }).catch(err => {
                     console.error(err);
                 });;
             }
+            setFirstInput("")
+            setSecondInput("")
         }
     }
 
@@ -75,6 +118,9 @@ const ModalForm = (props) => {
 
             </Modal.Header>
             <Modal.Body style={{paddingTop:30}}>
+                {/* <p>{props.endpoint}</p>
+                <p>{props.name}</p>
+                <p>{props.percentage}</p> */}
                 <Form>
                     <Form.Group >
                         {props.type === "add group"?

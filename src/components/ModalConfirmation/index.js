@@ -1,8 +1,15 @@
 import React, {useState} from "react";
 import {Button, Form, Modal} from 'react-bootstrap';
 import axios from "axios";
+import { useDispatch, useSelector } from 'react-redux'
+import { updateGroupOne } from "../../redux/groupOneSlice";
+import { updateGroupTwo } from "../../redux/groupTwoSlice";
+import { updateGroupThree } from "../../redux/groupThreeSlice";
+import { updateGroupFour } from "../../redux/groupFourSlice";
 
+const DEFAULT_ENDPOINT = "https://todo-api-18-140-52-65.rakamin.com/todos/"
 const ModalConfirmation = (props) => {
+    const dispatch = useDispatch()
 
     const config = {
         headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMTksImV4cCI6MTY5NzA3OTk4N30.pKtcR893pr8F081oWyymr3b4mDhMXCu7PqGKh2A-hfM` }
@@ -12,7 +19,18 @@ const ModalConfirmation = (props) => {
         // console.log(props.endpoint)
         axios.delete(props.endpoint, config)
         .then((response) => {
-            console.log(response)
+            axios.get(DEFAULT_ENDPOINT+ props.group +"/items", config)
+            .then((response) => {
+                if(props.group === 1){
+                    dispatch(updateGroupOne(response.data))
+                }else if (props.group === 2){
+                    dispatch(updateGroupTwo(response.data))
+                }else if (props.group === 3){
+                    dispatch(updateGroupThree(response.data))
+                }else if (props.group === 4){
+                    dispatch(updateGroupFour(response.data))
+                } 
+            })
             props.onHide()
             
         }).catch(err => {
